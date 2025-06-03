@@ -36,8 +36,9 @@ export async function POST(request: Request) {
 
   // 3️⃣ Prepare new device & log entries
   const now = new Date();
-  const existingDevices = user.devices ?? [];
-  const existingLogs    = user.logs    ?? [];
+ const existingDevices = (user.devices as any[]) ?? [];
+const existingLogs = (user.logs as any[]) ?? [];
+
 
   const deviceEntry = {
     ...deviceInfo,
