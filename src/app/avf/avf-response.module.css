@@ -1,12 +1,4 @@
-:root {
-  --light-red-bg: #fff5f6;
-  --main-blue: #1170ee;
-  --main-yellow: #ffc801;
-  --label-black: #191c21;
-  --value-grey: #44484e;
-  --white: #fff;
-  --card-shadow: 0 4px 18px rgba(60,72,101,0.09);
-}
+
 
 /* OUTER BG */
 .bgPage {
