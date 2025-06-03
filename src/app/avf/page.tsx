@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter, notFound } from 'next/navigation';
 import styles from './avf-response.module.css';
-import styles from './global.module.css';
 export default function AVFResponsePage() {
   const searchParams = useSearchParams();
   const token = searchParams.get('id');

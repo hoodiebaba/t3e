@@ -7,6 +7,7 @@ import { PropsWithChildren } from 'react';
 import Navbar from './components/navbar';
 import Sidebar from './components/sidebar';
 import { UserProvider, useUser } from '@/context/UserContext';
+import '../../styles/globals.css'; // ✅ One-time import, no variable needed
 
 function LayoutBody({ children }: PropsWithChildren) {
   const pathname = usePathname();
