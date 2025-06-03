@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { generatePDFAndSave } from '@/lib/pdfUtil';
 
-function getDistance(lat1, lon1, lat2, lon2) {
+function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const toRad = x => (x * Math.PI) / 180;
   const R = 6371000;
   const dLat = toRad(lat2 - lat1);
