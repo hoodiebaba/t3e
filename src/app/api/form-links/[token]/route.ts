@@ -1,9 +1,10 @@
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { generatePDFAndSave } from '@/lib/pdfUtil';
+import type { NextRequest } from 'next/server';
 
 function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const toRad = x => (x * Math.PI) / 180;
+const toRad = (x: number): number => (x * Math.PI) / 180;
   const R = 6371000;
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
@@ -18,11 +19,8 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
 }
 
 // ------------- Yahan GET handler add karo -------------
-export async function GET(req, context) {
-  const { params } = context;
-  const awaitedParams = await params;
-  const { token } = awaitedParams;
-
+export async function GET(req: NextRequest, context: any) {
+  const { token } = context.params;
   const form = await prisma.formLinks.findUnique({
     where: { token },
     select: {
@@ -37,10 +35,14 @@ export async function GET(req, context) {
       status: true,
       responsePDF: true,
       createdAt: true,
-      photos: true, // Agar aap photos rakh rahe ho toh
+      photos: true, // Only if you're storing photos
     }
   });
-  if (!form) return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
+
+  if (!form) {
+    return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
+  }
+
   return NextResponse.json({ ok: true, form });
 }
 // ------------------------------------------------------

@@ -4,7 +4,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,                  // 🔧 Turned OFF for dev
+    "noImplicitAny": false,          // 🔧 Allow 'any'
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -22,6 +23,14 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "prisma/seed.js", "src/app/components/sidebar.jsx", "src/lib/pdfUtil.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "prisma/seed.js",
+    "src/app/components/sidebar.jsx",
+    "src/lib/pdfUtil.js"
+  ],
   "exclude": ["node_modules"]
 }

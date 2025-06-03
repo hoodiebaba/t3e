@@ -8,6 +8,7 @@ import { MdClose, MdContentCopy, MdAdd, MdDelete, MdFilterList, MdSort, MdPerson
 import { FaUserEdit, FaEye, FaTrash, FaPlus, FaFilter } from 'react-icons/fa';
 
 import NoAccess from '../components/NoAccess';
+import { FormLinks } from '@prisma/client';
 
 export default function FormsPage() {
   useAuthGuard();
@@ -16,7 +17,7 @@ export default function FormsPage() {
   console.log("user permissions:", perms);  // Ya console.log("user:", user);
 
   const [formLinks, setFormLinks] = useState([]);
-  const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<string[]>([]); 
   const [search, setSearch] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
@@ -54,20 +55,20 @@ export default function FormsPage() {
   useEffect(() => { fetchFormLinks(); }, []);
 
   // 3. HANDLE SEARCH, FILTER, SORT
-  const filteredLinks = formLinks
-    .filter(link =>
-      (link.token?.toLowerCase().includes(search.toLowerCase()) ||
-       link.createdBy?.toLowerCase().includes(search.toLowerCase()) ||
-       link.candidateName?.toLowerCase().includes(search.toLowerCase() || '')
-      )
-    )
-    .filter(link => !filterUser || link.createdBy === filterUser)
-    .filter(link => !filterType || link.formType === filterType)
-    .filter(link => !filterDate || (link.createdAt && link.createdAt.startsWith(filterDate)))
-    .sort((a, b) => {
-      if (sortOrder === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
-      else return new Date(a.createdAt) - new Date(b.createdAt);
-    });
+ const filteredLinks = (formLinks as FormLinks[])
+  .filter(link =>
+    (link.token?.toLowerCase().includes(search.toLowerCase()) ||
+     link.createdBy?.toLowerCase().includes(search.toLowerCase()) ||
+     link.candidateName?.toLowerCase().includes(search.toLowerCase()))
+  )
+  .filter(link => !filterUser || link.createdBy === filterUser)
+  .filter(link => !filterType || link.formType === filterType)
+.filter(link => !filterDate || (link.createdAt && link.createdAt.toISOString().startsWith(filterDate)))  .sort((a, b) => {
+    const aDate = new Date(a.createdAt).getTime();
+    const bDate = new Date(b.createdAt).getTime();
+    return sortOrder === 'newest' ? bDate - aDate : aDate - bDate;
+  });
+
 
   // 4. HANDLE CREATE LINK (API)
   async function handleCreateBGV() {
@@ -369,8 +370,8 @@ export default function FormsPage() {
                 <input
                   type="checkbox"
                   onChange={() =>
-                    setSelected(allChecked ? [] : filteredLinks.map((l) => l.id))
-                  }
+  setSelected(allChecked ? [] : filteredLinks.map((l) => l.id))
+}
                   checked={allChecked}
                 />
               </th>
@@ -386,16 +387,17 @@ export default function FormsPage() {
               <tr key={form.id}>
                 <td>
                   <input
-                    type="checkbox"
-                    checked={selected.includes(form.id)}
-                    onChange={() =>
-                      setSelected(s =>
-                        s.includes(form.id)
-                          ? s.filter(i => i !== form.id)
-                          : [...s, form.id]
-                      )
-                    }
-                  />
+  type="checkbox"
+  checked={selected.includes(String(form.id))}
+  onChange={() =>
+    setSelected((s) =>
+      s.includes(String(form.id))
+        ? s.filter((i) => i !== String(form.id))
+        : [...s, String(form.id)]
+    )
+  }
+/>
+
                 </td>
                 <td>{form.formType}</td>
                 <td>
@@ -425,8 +427,8 @@ export default function FormsPage() {
 
                 </td>
                 <td>{form.createdBy}</td>
-                <td>{form.createdAt?.split('T')[0]}</td>
-                <td>
+<td>{form.createdAt ? new Date(form.createdAt).toLocaleDateString() : ''}</td>
+     <td>
                   <span
                     className={styles.statusDot + ' ' +
                       (form.status === 'not_clicked' ? styles.notClicked :

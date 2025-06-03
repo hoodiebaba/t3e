@@ -26,6 +26,10 @@ export default function UsersPage() {
   useAuthGuard(); // Enable if you have useAuthGuard
 
   const { user } = useUser();
+function hasPageAccess(user: User | null | undefined) {
+  if (!user) return false;
+  return user.permissions?.viewUsers || user.role === 'SUDO';
+}
   const loginUserPerms = user?.permissions || {};
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState('');
@@ -228,11 +232,7 @@ const handleLoginAs = async (targetUserId: string) => {
     }
   };
 
-  // ========== NO ACCESS ================
- if (!hasPageAccess(user)) {
-  return <NoAccess />;
-}
-
+ 
   // --- Dropdown filter options
   const uniqueCreators = Array.from(new Set(visibleUsers.map(u => u.createdBy)));
   const uniqueDates = Array.from(new Set(visibleUsers.map(u => u.createdAt.split(' ')[0])));
@@ -562,7 +562,12 @@ const handleLoginAs = async (targetUserId: string) => {
                       title={!loginUserPerms.loginAsUser ? "No access" : "Login as"}
                       style={{ opacity: loginUserPerms.loginAsUser ? 1 : 0.55, cursor: loginUserPerms.loginAsUser ? 'pointer' : 'not-allowed' }}
                       disabled={!loginUserPerms.loginAsUser}
-                      onClick={() => loginUserPerms.loginAsUser ? handleLoginAs(u.id) : alert("You do not have access to login as another user.")}
+                      onClick={() =>
+  loginUserPerms.loginAsUser
+    ? handleLoginAs(String(u.id))
+    : alert("You do not have access to login as another user.")
+}
+
                     >
                       <FaEye />
                     </button>

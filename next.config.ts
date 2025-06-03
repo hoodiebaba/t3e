@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   eslint: {
-    ignoreDuringBuilds: true, // ✅ This disables build errors due to linting
+    ignoreDuringBuilds: true, // ✅ Prevents build from failing due to ESLint errors
   },
 };
 
