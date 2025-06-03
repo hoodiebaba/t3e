@@ -1,0 +1,24 @@
+.noAccessWrap {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.noAccessCard {
+  padding: 40px 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.08);
+  text-align: center;
+  border: 2px solid #ffe4e4;
+  max-width: 340px;
+}
+
+.noAccessIcon {
+  font-size: 3.2rem;
+  display: block;
+  margin-bottom: 10px;
+  color: #ff5555;
+}

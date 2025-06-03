@@ -1,0 +1,142 @@
+.sidebarWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 96vh;
+  max-height: 600px;      /* <- sidebar ki height limit */
+  background: #f0f0f0;
+  padding: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;       /* No vertical scroll! */
+}
+
+.sidebarWrapper.collapsed {
+  width: 70px;
+  padding: 16px 8px;
+  background: #e0e0e0;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebarTitle {
+  color: #000;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.toggleBtn {
+  cursor: pointer;
+  font-size: 23px;
+  color: black;
+  background: white;
+  border-radius: 10px;
+  padding: 8px;
+  transition: all 0.3s;
+}
+
+.toggleBtn.active {
+  color: red;
+  margin-left: 10px;
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  /* Scroll limit trick: */
+  overflow-y: auto;
+  max-height: 450px;
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 13px;
+  margin-bottom: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #1f2937;
+  transition: background 0.3s;
+  user-select: none;
+}
+
+.sidebarItem:hover {
+  background: #e5e7eb;
+}
+
+.sidebarItem.active {
+  background: #ffe3e3;
+  color: red;
+  box-shadow: 0 2px 6px rgba(255, 0, 0, 0.18);
+}
+
+.sidebarItem.disabled {
+  color: #aaa;
+  background: #f4f4f4;
+  cursor: not-allowed;
+}
+
+.sidebarIcon {
+  font-size: 19px;
+  margin-right: 12px;
+}
+
+.sidebarWrapper.collapsed .sidebarIcon {
+  margin-right: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.sidebarWrapper.collapsed .sidebarText {
+  display: none;
+}
+
+/* Popup style */
+.permissionPopup {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: #fff0f0;
+  color: #d00000;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 15px;
+  box-shadow: 0 8px 32px rgba(255,0,0,0.11);
+  z-index: 99;
+  animation: fadeIn 0.2s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+.permissionPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  background: #fff0f0;
+  color: #d00000;
+  padding: 18px 28px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 12px 40px rgba(255,0,0,0.12);
+  animation: fadeIn 0.15s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -20%);}
+  to   { opacity: 1; transform: translate(-50%, -50%);}
+}

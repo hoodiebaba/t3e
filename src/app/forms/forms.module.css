@@ -1,0 +1,430 @@
+/* ============= FORMS PAGE ============= */
+.formsPage {
+  padding: 24px;
+  background: #f7f7fa;
+  min-height: 100vh;
+}
+
+/* ---------- TOP ACTION BAR ---------- */
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.searchInput {
+  padding: 8px 16px;
+  border: 1px solid #c0c0d2;
+  border-radius: 8px;
+  outline: none;
+  min-width: 180px;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #5031ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  height: 38px;
+  font-size: 1rem;
+}
+.actionBtn:disabled { background: #cccccc; cursor: not-allowed; }
+.actionBtn:hover:not(:disabled) { background: #2c1e78; }
+
+/* ---------- TABLE ---------- */
+.tableWrapper {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(80,49,255,0.05);
+  overflow-x: auto;
+  max-height: 440px;
+}
+.formsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  min-width: 730px;
+}
+.formsTable th, .formsTable td {
+  padding: 12px 18px;
+  border-bottom: 1px solid #ededf5;
+  text-align: left;
+  background: inherit;
+  font-size: 1rem;
+}
+.formsTable th {
+  background: #1a1a1a;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  z-index: 2;
+}
+.formsTable tbody tr:hover { background: #f5f0ff; }
+.noData {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 20px;
+  font-size: 1.08em;
+}
+
+/* ---------- COPY BUTTON IN TABLE ---------- */
+.copyIcon {
+  background: none;
+  border: none;
+  color: #5031ff;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-left: 7px;
+  transition: color 0.18s;
+  padding: 4px;
+  vertical-align: middle;
+}
+.copyIcon:hover { color: #2c1e78; }
+.copySuccess {
+  color: #3abb64;
+  font-size: 0.97em;
+  margin-left: 7px;
+}
+
+/* ---------- STATUS DOT ---------- */
+.statusDot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 100px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+.notClicked   { background: #dbdbe9; }
+.clicked      { background: #edbb3d; }
+.submitted    { background: #27c671; }
+.expired      { background: #f36a6a; }
+
+/* ---------- MODALS (overlay + card) ---------- */
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.50);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.modalContent {
+  background: #fff;
+  border-radius: 18px;
+  min-width: 370px;
+  max-width: 520px;
+  width: 100%;
+  padding: 24px 24px 24px 24px;
+  box-shadow: 0 10px 36px rgba(60,40,80,0.17);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+  position: relative;
+}
+@media (max-width: 700px) {
+  .modalContent { min-width: 98vw !important; padding: 18px 5vw; }
+}
+@media (max-width: 480px) {
+  .modalContent { min-width: 100vw !important; padding: 12px 2vw; }
+}
+
+/* ---------- MODAL CLOSE BUTTON ---------- */
+.closeBtn {
+  background: #ef2b47;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s, color 0.15s;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  box-shadow: 0 2px 8px #db385825;
+  font-size: 1.25rem;
+  z-index: 10;
+}
+.closeBtn:hover {
+  background: #bc1832;
+  color: #fff;
+}
+
+
+/* ---------- CREATE/MODAL BUTTONS ---------- */
+.createBtn, .modalBtn {
+  background: #5031ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 08px 26px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.17s;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: -30;
+}
+.createBtn:hover, .modalBtn:hover { background: #2c1e78; }
+.modalBtn:disabled { background: #cccccc; color: #fff; cursor: not-allowed; }
+
+.linkBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 32px 0 0 0;
+}
+.linkInput {
+  width: 100%;
+  padding: 11px 12px;
+  font-size: 1.03rem;
+  border: 1px solid #d1d1e7;
+  border-radius: 7px;
+  background: #fafaff;
+  color: #232127;
+  margin-right: 8px;
+  outline: none;
+}
+.linkInput:focus { border-color: #5031ff; background: #fff; }
+
+/* ---------- MODAL INPUTS ---------- */
+.modalContent form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  width: 100%;
+}
+
+.modalInput,
+.modalContent input[type="text"],
+.modalContent input[type="email"],
+.modalContent input[type="password"],
+.modalContent select {
+  width: 90%;                /* chhota ho gaya */
+  margin: 0px 0 2px 0;       /* upar niche ka gap kam */
+  padding: 10px 14px;
+  border-radius: 7px;
+  border: 1px solid #d1d1e7;
+  background: #fafaff;
+  color: #232127;
+  font-size: 11px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border 0.15s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 700px) {
+  .modalInput,
+  .modalContent input[type="text"],
+  .modalContent input[type="email"],
+  .modalContent input[type="password"],
+  .modalContent select {
+    width: 97%;
+    padding: 10px 10px;
+  }
+}
+
+
+/* ========== FILTER MODAL BTN ALIGN ========== */
+.modalContent > div[style*="flex-end"] .actionBtn {
+  min-width: 90px;
+  font-size: 1em;
+  padding: 8px 0;
+  border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .createBtn, .modalBtn, .actionBtn, .linkBox, .modalContent input, .modalContent select {
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+  }
+  .linkBox { flex-direction: column; gap: 7px; }
+}
+
+/* Error/Success */
+.errorMsg {
+  color: #ff3565;
+  font-size: 0.99rem;
+  margin-top: 6px;
+  text-align: center;
+  min-height: 21px;
+}
+.successMsg {
+  color: #31b160;
+  font-size: 0.99rem;
+  margin-top: 6px;
+  text-align: center;
+  min-height: 21px;
+}
+
+
+.filterModalBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #5031ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 36px;
+  height: 46px;
+  font-size: 1.18rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.17s, box-shadow 0.13s;
+  min-width: 120px;
+  line-height: 1;
+  box-shadow: 0 1.5px 8px #5031ff16;
+  margin: 0 4px;
+}
+.filterModalBtn:hover {
+  background: #2c1e78;
+}
+
+@media (max-width: 500px) {
+  .filterModalBtn {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    font-size: 1rem;
+    padding: 0 0;
+    margin: 7px 0 0 0;
+  }
+}
+
+/* Overlay (same as before) */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Unique Filter Modal Box */
+.filterModalContent {
+  background: #fff;
+  border-radius: 18px;
+  min-width: 370px;
+  max-width: 450px;
+  width: 100%;
+  padding: 28px 30px 24px 30px;
+  box-shadow: 0 10px 36px rgba(60,40,80,0.17);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+
+.filterModalTitle {
+  margin-bottom: 0;
+  font-size: 1.19rem;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: 0.5px;
+  color: #232127;
+}
+
+.filterModalLabel {
+  display: block;
+  font-size: 1.10em;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 6px;
+  color: #232127;
+}
+
+.filterModalField {
+  width: 100%;
+  font-size: 1.14rem;
+  height: 44px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d1e7;
+  background: #fafaff;
+  color: #232127;
+  margin-bottom: 0;
+  box-sizing: border-box;
+  transition: border 0.15s;
+  outline: none;
+}
+.filterModalField:focus {
+  border-color: #5031ff;
+  background: #fff;
+}
+.filterModalField option {
+  font-size: 1.13rem;
+  font-weight: 500;
+}
+
+/* Buttons (Only in filter modal) */
+.filterModalBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #5031ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 34px;
+  height: 46px;
+  font-size: 1.13rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.17s, box-shadow 0.13s;
+  min-width: 110px;
+  line-height: 1;
+  box-shadow: 0 1.5px 8px #5031ff16;
+}
+.filterModalBtn:hover {
+  background: #2c1e78;
+}
+@media (max-width: 600px) {
+  .filterModalContent {
+    min-width: 98vw !important;
+    max-width: 99vw;
+    padding: 16px 3vw;
+  }
+  .filterModalBtn {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    font-size: 1rem;
+    padding: 0;
+    margin-top: 7px;
+  }
+  .filterModalField {
+    font-size: 1rem;
+    height: 38px;
+    padding: 8px 10px;
+  }
+}

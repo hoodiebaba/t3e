@@ -1,0 +1,174 @@
+.responsesPage {
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+/* ---------- TOP ACTION BAR ---------- */
+.topActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 8px;
+  flex: 1;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 4px;
+  font-size: 14px;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.actionBtn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.actionBtn:hover:not(:disabled) {
+  background-color: #115293;
+}
+
+/* ---------- FILTER PANEL ---------- */
+.filterPanel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filterPanel label {
+  font-size: 14px;
+}
+
+.filterPanel select,
+.filterPanel input[type='date'] {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* ---------- GRID LAYOUT ---------- */
+.gridWrapper {
+  margin-top: 8px;
+}
+
+.gridHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.card {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkbox in grid card */
+.cardCheckbox {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  transform: scale(1.1);
+}
+
+/* Folder icon */
+.folderIcon {
+  color: #ffb300;
+  margin-bottom: 8px;
+}
+
+.cardInfo {
+  text-align: center;
+}
+
+.fileName {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.metaText {
+  display: block;
+  font-size: 12px;
+  color: #555;
+}
+
+/* No data placeholder */
+.noData {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  padding: 24px;
+}
+
+/* ---------- LIST LAYOUT ---------- */
+.listWrapper {
+  margin-top: 8px;
+}
+
+.listTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.listTable th,
+.listTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.listTable th {
+  background-color: #f5f5f5;
+  text-align: left;
+}
+
+.listTable tr:hover {
+  background-color: #fafafa;
+}
+
+.listTable td svg {
+  vertical-align: middle;
+  color: #d32f2f;
+}

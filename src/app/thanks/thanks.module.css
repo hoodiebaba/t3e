@@ -1,0 +1,82 @@
+.bg {
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background: linear-gradient(135deg, #fff 70%, #e9fff2 100%);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 36px 0 #bbffd2aa, 0 2px 12px #32a8521a;
+  padding: 3rem 2.4rem;
+  max-width: 360px;
+  width: 98vw;
+  text-align: center;
+  animation: popin 0.5s cubic-bezier(.42,1.21,.71,1.01);
+  position: relative;
+}
+
+@keyframes popin {
+  0%   { transform: scale(0.72) translateY(120px); opacity: 0; }
+  80%  { transform: scale(1.08) translateY(-6px); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.card h2 {
+  color: #20ae56;
+  margin-top: 0.8rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  animation: fadeInText 0.8s 0.22s both;
+}
+
+@keyframes fadeInText {
+  from { opacity: 0; transform: translateY(20px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+.card p {
+  color: #333;
+  font-size: 1.09rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0;
+  animation: fadeInText 0.6s 0.36s both;
+}
+
+/* SVG Animation */
+.tick {
+  width: 68px;
+  height: 68px;
+  display: block;
+  margin: 0 auto 0.4rem;
+}
+
+.circleGreen {
+  stroke: #33c97a;
+  stroke-width: 3.2;
+  fill: #eaffea;
+  filter: drop-shadow(0 0 14px #7bfaa0cc);
+  animation: drawCircle 0.6s ease-in;
+}
+@keyframes drawCircle {
+  from { stroke-dasharray: 163; stroke-dashoffset: 163; }
+  to   { stroke-dasharray: 163; stroke-dashoffset: 0; }
+}
+
+.checkGreen {
+  stroke: #18b154;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  filter: drop-shadow(0 0 7px #6af495c0);
+  animation: drawCheck 0.45s 0.3s cubic-bezier(.48,1.71,.44,1.01) forwards;
+}
+@keyframes drawCheck {
+  from { stroke-dashoffset: 24; }
+  to   { stroke-dashoffset: 0; }
+}

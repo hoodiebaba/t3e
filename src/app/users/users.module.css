@@ -1,0 +1,266 @@
+/* ---------- PAGE + TABLE ---------- */
+.pageWrapper {
+  padding: 24px;
+  background: #f7f7fa;
+  min-height: 100vh;
+}
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.searchInput {
+  padding: 8px 16px;
+  border: 1px solid #c0c0d2;
+  border-radius: 8px;
+  outline: none;
+  min-width: 180px;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #5031ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  height: 38px;
+}
+.actionBtn:disabled { background: #cccccc; cursor: not-allowed; }
+.actionBtn:hover:not(:disabled) { background: #2c1e78; }
+
+.tableWrapper {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(80,49,255,0.05);
+  overflow-x: auto;
+  max-height: 440px;
+}
+.userTable { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.userTable th, .userTable td {
+  padding: 12px 18px;
+  border-bottom: 1px solid #ededf5;
+  text-align: left;
+  background: inherit;
+}
+.userTable th {
+  background: #1a1a1a;
+  color: #fff;
+  position: sticky; top: 0;
+}
+.userTable tbody tr:hover { background: #f5f0ff; }
+.iconBtn {
+  background: none;
+  border: none;
+  color: #5031ff;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px;
+}
+.iconBtn:hover { color: #2c1e78; }
+.noData {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* ---------- MODALS (overlay + card) ---------- */
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.50);
+  display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.modalContent {
+  background: #fff;
+  border-radius: 18px;
+  min-width: 370px;
+  max-width: 520px;
+  width: 100%;
+  padding: 36px 34px 24px 34px;
+  box-shadow: 0 10px 36px rgba(60,40,80,0.17);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+
+@media (max-width: 700px) {
+  .modalContent { min-width: 98vw !important; padding: 18px 5vw; }
+}
+@media (max-width: 480px) {
+  .modalContent { min-width: 100vw !important; padding: 12px 2vw; }
+}
+
+/* ---------- PERMISSIONS GRID (edit modal) ---------- */
+.permEditCard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 18px 14px;
+  margin: 32px 0 22px 0;
+  width: 100%;
+  justify-content: center;
+}
+@media (max-width: 700px) {
+  .permEditCard { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+}
+@media (max-width: 480px) {
+  .permEditCard { grid-template-columns: 1fr; }
+}
+
+/* Label styling for permissions */
+.permCheckLabel {
+  background: #f7f7fa;
+  border-radius: 18px;
+  padding: 11px 10px 11px 13px;
+  font-size: 1.07rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  min-width: 0;
+  transition: background 0.15s;
+  box-shadow: 0 1.5px 10px #c8c8ee12;
+  border: 1px solid #ece8ef;
+  gap: 9px;
+}
+.permCheckLabel[style*="opacity: 0.55"] {
+  cursor: not-allowed !important;
+}
+.permCheckLabel input[type="checkbox"] {
+  accent-color: #5031ff;
+}
+
+/* Pagination controls in permissions modal */
+.permPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 12px 0 0 0;
+}
+.permPagination .actionBtn {
+  min-width: 80px;
+  font-size: 0.97em;
+  padding: 8px 0;
+}
+
+/* ---------- CREATE USER MODAL (form fields) ---------- */
+.modalContent input[type="text"],
+.modalContent input[type="email"],
+.modalContent input[type="password"],
+.modalContent select {
+  width: 100%;
+  margin: 7px 0 17px 0;
+  padding: 10px 13px;
+  border-radius: 7px;
+  border: 1px solid #d1d1e7;
+  background: #fafaff;
+  color: #232127;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border 0.15s;
+}
+.modalContent input[type="text"]:focus,
+.modalContent input[type="email"]:focus,
+.modalContent input[type="password"]:focus,
+.modalContent select:focus {
+  border-color: #5031ff;
+  background: #fff;
+}
+
+.modalContent h3, .modalContent h4 {
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- MODAL BUTTONS (Save/Cancel/Next/Back) ---------- */
+.modalActions {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.saveBtn {
+  background: #5031ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 38px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.17s;
+}
+.saveBtn:hover { background: #2c1e78; }
+.cancelBtn {
+  background: #ef2b47;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 36px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.17s;
+}
+.cancelBtn:hover { background: #bc1832; }
+
+/* Pagination */
+.permStepBtn {
+  background: #eee;
+  color: #222;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 22px;
+  font-weight: 600;
+  font-size: 1.02em;
+  cursor: pointer;
+  transition: background 0.14s;
+  min-width: 84px;
+}
+.permStepBtn:disabled {
+  background: #e5e4ef;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.permStepBtn:not(:disabled):hover {
+  background: #d5d4f9;
+}
+
+@media (max-width: 500px) {
+  .saveBtn, .cancelBtn, .permStepBtn { width: 100%; padding: 12px 0; }
+  .modalActions { flex-direction: column; gap: 13px; }
+}
+
+/* Error/Success */
+.errorMsg {
+  color: #ff3565;
+  font-size: 0.99rem;
+  margin-top: 6px;
+  text-align: center;
+  min-height: 21px;
+}
+.successMsg {
+  color: #31b160;
+  font-size: 0.99rem;
+  margin-top: 6px;
+  text-align: center;
+  min-height: 21px;
+}
