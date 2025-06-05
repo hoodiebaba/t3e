@@ -13,9 +13,8 @@ export default function NotFound() {
       <h2 className={styles.subheading}>Page Not Found</h2>
       <p className={styles.text}>
         Oops! The page you are looking for does not exist.<br />
-        Please check the URL or return to the homepage.
+        Please check the URL.
       </p>
-      <a href="/" className={styles.homeBtn}>Go to Home</a>
     </div>
   );
 }

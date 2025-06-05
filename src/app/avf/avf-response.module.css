@@ -1,169 +1,549 @@
+/* avf-response.module.css */
+/* NO :root variables here if they are global */
+/* NO *, html, body styles here */
 
-
-/* OUTER BG */
+/* === Page Layout (Component Specific) === */
 .bgPage {
-  min-height: 100vh;
-  background: var(--light-red-bg);
+  min-height: 100vh; /* This is fine if .bgPage is the root element of your component */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px; /* Base padding for small screens */
+}
+
+.pageContentWrapper {
+  width: 100%;
+  max-width: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* MAIN CARD AREA (wraps everything except bg) */
-.mainCard {
-  width: 100vw;
-  max-width: 420px;
-  background: transparent;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 0;
-  border-radius: 0;
-  box-shadow: none;
+.mainTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-color-dark); /* Uses global variable */
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* TOP IMAGE (no border-radius, card ke sath hi align) */
+/* Top Image Styling */
 .cardImgWrap {
   width: 100%;
-  text-align: center;
-  margin-bottom: 0;
-  background: transparent;
+  margin-bottom: 20px;
 }
 .cardImage {
-  display: block;
   width: 100%;
-  max-width: 420px;
-  height: 90px;
+  height: 70px;
   object-fit: cover;
-  border-radius: 0;
-  margin: 0 auto;
+  border-radius: var(--border-radius-sm);
 }
 
-/* CANDIDATE/ADDRESS CARD */
-.infoCard {
-  width: calc(100vw - 32px);      /* 16px side gap (chhota card on mobile) */
-  max-width: 270px;
-  background: var(--white);
-  margin: 18px auto 12px auto;
-  padding: 13px 13px 10px 13px;
+/* === General Card Styling === */
+.infoCard,
+.confirmCard,
+.step2Card,
+.locationStatusCard {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-lg);
   box-shadow: var(--card-shadow);
-  border-radius: 12px;
-  text-align: left;
+  width: 100%;
+  padding: 20px 15px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+}
+
+.infoCard {
   align-items: flex-start;
 }
 
-/* BLUE CONFIRM CARD */
 .confirmCard {
-  background: var(--main-blue);
-  color: #fff;
-  border-radius: 13px;
-  width: calc(100vw - 32px);
-  max-width: 270px;
-  padding: 17px 13px 13px 13px;
-  box-shadow: var(--card-shadow);
-  display: flex;
-  flex-direction: column;
+  background-color: var(--primary-blue);
+  color: var(--text-on-primary-blue);
   align-items: center;
-  margin: 10px auto 18px auto;
-}
-
-/* CARD LABELS & VALUES */
-.label {
-  font-size: 0.96rem;
-  color: var(--label-black);
-  font-weight: 700;
-  margin-bottom: 2px;
-  letter-spacing: -0.3px;
-  margin-left: 15px;
-}
-.value {
-  color: var(--value-grey);
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-  word-break: break-all;
-    margin-left: 15px;
-
-}
-.valueAddress {
-  color: var(--value-grey);
-  font-size: 0.99rem;
-  font-weight: 500;
-  line-height: 1.5;
-  word-break: break-word;
-  margin-bottom: 3px;
-    margin-left: 15px;
-
-}
-
-.confirmTitle {
-  font-size: 1.11rem;
-  font-weight: bold;
-  margin-bottom: 7px;
   text-align: center;
 }
-.confirmMsg {
-  font-size: 0.98rem;
-  opacity: 0.97;
-  margin-bottom: 17px;
-  font-weight: 500;
-  text-align: center;
-}
-.confirmBtn {
-  padding: 11px 0;
-  font-size: 1.01rem;
-  font-weight: 700;
-  border-radius: 7px;
-  background: var(--main-yellow);
-  color: #232323;
-  border: none;
-  width: 97%;
-  max-width: 220px;
-  box-shadow: 0 2px 7px rgba(10,40,90,0.06);
-  cursor: pointer;
-  transition: background 0.18s;
-}
-.confirmBtn:hover, .confirmBtn:focus {
-  background: #ffe55e;
-}
 
-/* Step 2 form card, same size */
 .step2Card {
-  background: var(--white);
-  border-radius: 12px;
-  box-shadow: var(--card-shadow);
-  width: calc(100vw - 32px);
-  max-width: 270px;
-  padding: 18px 13px 13px 13px;
-  margin: 18px auto 12px auto;
-  display: flex;
-  flex-direction: column;
   align-items: stretch;
 }
 
-/* Responsive: For mobile and up to small tablets, this is already optimal! */
-@media (max-width: 500px) {
-  .mainCard {
-    max-width: 100vw;
-    width: 100vw;
-    padding-left: 0;
-    padding-right: 0;
+.locationStatusCard {
+  text-align: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid var(--border-color);
+}
+
+/* === Text Elements inside Cards === */
+.label,
+.inputLabel {
+  font-size: 0.9rem;
+  color: var(--text-color-dark);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.infoCard .label {
+   margin-left: 0;
+}
+
+.value {
+  color: var(--text-color-medium);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  word-break: break-word;
+  margin-left: 0;
+}
+.valueAddress {
+  color: var(--text-color-light);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.5;
+  word-break: break-word;
+  margin-bottom: 5px;
+  margin-left: 0;
+}
+
+.confirmTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.confirmMsg {
+  font-size: 0.95rem;
+  opacity: 0.95;
+  margin-bottom: 18px;
+  font-weight: 400;
+}
+
+/* === Buttons === */
+.confirmBtn,
+.submitBtn,
+.cameraButton,
+.captureButton,
+.closeCameraButton,
+.removePhotoButton {
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  transition: background-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.confirmBtn {
+  background-color: var(--primary-yellow);
+  color: var(--text-on-primary-yellow);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.confirmBtn:hover, .confirmBtn:focus {
+  background-color: #ffca2c;
+  box-shadow: 0 3px 7px rgba(0,0,0,0.15);
+}
+
+.submitBtn {
+  background-color: var(--primary-blue);
+  color: var(--text-on-primary-blue);
+  margin-top: 20px;
+}
+.submitBtn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+.submitBtn:disabled {
+  background-color: #adb5bd;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cameraButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-green);
+  color: var(--text-on-primary-blue);
+  margin-top: 8px;
+  margin-bottom: 15px;
+  width: auto;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+.cameraButton span[role="img"] {
+  margin-right: 8px;
+  font-size: 1.1em;
+}
+.cameraButton:hover {
+  background-color: #1e7e34;
+}
+
+/* === Form Specific Styles (Step 2) === */
+.step2Title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text-color-dark);
+  text-align: center;
+}
+
+.step2Form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inputField,
+select.inputField {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color-input);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  background-color: var(--bg-card);
+  color: var(--text-color-dark);
+}
+.inputField::placeholder {
+  color: var(--text-color-placeholder);
+  opacity: 1;
+}
+.inputField:focus,
+select.inputField:focus {
+  border-color: var(--primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 0.2rem var(--focus-ring-color);
+}
+
+.mobileInputContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color-input);
+  border-radius: var(--border-radius-md);
+  background-color: var(--bg-card);
+}
+.mobileInputContainer:focus-within {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring-color);
+}
+.countryCode {
+  padding: 10px 12px;
+  background-color: #e9ecef;
+  border-right: 1px solid var(--border-color-input);
+  color: var(--text-color-medium);
+  border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+}
+.mobileInput {
+  flex-grow: 1;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 10px 12px;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+}
+.mobileInput:focus {
+  outline: none;
+}
+
+/* === Camera & Photo Preview Styles === */
+.photoPreviewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  justify-content: flex-start;
+}
+.photoPreviewItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  border-radius: var(--border-radius-md);
+  background-color: #f8f9fa;
+  width: calc(50% - 5px);
+  max-width: 150px;
+}
+.photoPreviewImg {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 8px;
+  border: 1px solid #e0e0e0;
+}
+.removePhotoButton {
+  background-color: var(--primary-red);
+  color: var(--text-on-primary-blue);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  width: auto;
+  border-radius: var(--border-radius-sm);
+}
+.removePhotoButton:hover {
+  background-color: #c82333;
+}
+
+.sampleImageContainer {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius-md);
+  background-color: #f8f9fa;
+}
+.sampleImageContainer p {
+  margin-bottom: 5px;
+  font-size: 0.85rem;
+  color: var(--text-color-medium);
+  font-weight: 500;
+}
+.sampleImage {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  margin: 0 auto;
+}
+
+.cameraOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 16px;
+}
+.cameraView {
+  background-color: var(--bg-card);
+  padding: 20px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--card-shadow-strong);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+.videoFeed {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  background-color: #000;
+}
+.cameraView div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+.captureButton, .closeCameraButton {
+  margin-top: 10px;
+  width: calc(50% - 5px);
+  max-width: 180px;
+}
+.captureButton {
+  background-color: var(--primary-green);
+  color: var(--text-on-primary-blue);
+}
+.captureButton:hover {
+  background-color: #1e7e34;
+}
+.closeCameraButton {
+  background-color: var(--text-color-light);
+  color: var(--text-on-primary-blue);
+}
+.closeCameraButton:hover {
+  background-color: #5a6268;
+}
+
+/* === Utility & Message Styles === */
+.loadingText {
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 40px 20px;
+  color: var(--text-color-medium);
+}
+.inputError, .cameraErrorMsg, .locationWarning, .locationInfo, .locationSuccess {
+  padding: 10px 12px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  border-radius: var(--border-radius-md);
+  font-size: 0.9rem;
+  text-align: center;
+}
+.inputError {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+.cameraErrorMsg {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+.locationWarning, .locationInfo {
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+}
+.locationSuccess {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+.submittedMsg {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1.2rem;
+  color: var(--primary-green);
+}
+.submittedMsgSub {
+  display: block;
+  font-size: 1rem;
+  color: var(--text-color-medium);
+  margin-top: 8px;
+}
+.reloadOuter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(255, 243, 205, 0.95);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+}
+.reloadWarning {
+  color: #856404;
+  padding: 10px 15px;
+  text-align: center;
+  border-radius: var(--border-radius-md);
+  max-width: 90%;
+}
+.reloadTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.reloadMsg {
+  font-size: 0.85rem;
+}
+
+/* === Desktop and Larger Screen Adjustments === */
+@media (min-width: 600px) {
+  .bgPage {
+    padding: 30px;
+  }
+  .pageContentWrapper {
+    max-width: 550px;
   }
   .cardImage {
-    max-width: 100vw;
-    height: 64px;
+    height: 90px;
   }
-  .infoCard, .confirmCard, .step2Card {
-    width: calc(100vw - 18px);
-    max-width: 97vw;
-    border-radius: 10px;
-    padding-left: 7px;
-    padding-right: 7px;
-    margin: 12px auto;
+  .infoCard,
+  .confirmCard,
+  .step2Card,
+  .locationStatusCard {
+    padding: 25px 20px;
+  }
+  .label, .inputLabel {
+    font-size: 0.95rem;
+  }
+  .value {
+    font-size: 1.05rem;
+  }
+  .valueAddress {
+    font-size: 1rem;
+  }
+  .confirmTitle {
+    font-size: 1.25rem;
+  }
+  .confirmMsg {
+    font-size: 1rem;
+  }
+  .step2Title {
+    font-size: 1.4rem;
+  }
+  .photoPreviewItem {
+    width: calc(33.33% - 7px);
+    max-width: 160px;
+  }
+  .sampleImage {
+    max-width: 220px;
   }
 }
 
-/* Optional: Remove unnecessary duplicate rules from old CSS */
+@media (min-width: 768px) {
+  .pageContentWrapper {
+    max-width: 650px;
+  }
+   .mainTitle {
+    font-size: 1.8rem;
+  }
+  .confirmBtn,
+  .submitBtn {
+    padding: 12px 20px;
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .pageContentWrapper {
+    max-width: 700px;
+  }
+}
+
+
+
+.bgPage {
+  background: #e7ecfc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.centerCard {
+  max-width: 600px;
+  margin: 60px auto 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 32px 0 rgba(60,100,160,0.09);
+}
+
+.iconBox {
+  background: #fff0f1;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.errorCard {
+  padding: 16px 24px;
+  background: #fee2e2;
+  border-radius: 7px;
+  color: #991b1b;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+}

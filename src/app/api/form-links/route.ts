@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         token,
         formType,
         createdBy,
-        status: 'not_clicked',
+        status: 'Not clicked',
         candidateName: candidateName || null,
         houseNo: houseNo || null,
         nearby: nearby || null,

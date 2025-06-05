@@ -52,3 +52,71 @@ model FormLinks {
   photos        Json?    
 
 }
+
+// Add this new model to your schema.prisma file
+
+model BackgroundVerificationForm {
+  id            String   @id @map("_id") @default(auto()) @db.ObjectId
+  formLinkToken String   @unique // Token from the FormLinks table to identify this BGV instance
+
+  // --- Step 0: Form Access & Tracking ---
+  clicked       Boolean  @default(false)
+  status        String   @default("pending") // e.g., "pending", "draft", "submitted", "expired_draft"
+  draftExpiresAt DateTime?
+
+  // --- Step 1: Contact Information ---
+  email          String? // Will be validated as required by form logic
+  mobile         String? // Will be validated as required by form logic
+  alternateMobile String?
+
+  // --- Step 2: Personal Details ---
+  personalDetails        Json? // Object to store:
+                               // { fullName: String, formerName?: String, fatherName: String, 
+                               //   spouseName?: String, dob: String (YYYY-MM-DD), gender: String, 
+                               //   nationality: String, maritalStatus?: String }
+  passportPhotoUrl     String? // URL/path to the final stored passport photo
+
+  // --- Step 3: Address Verification ---
+  addressVerification    Json? // Object to store:
+                               // { currentAddress: { houseNo, streetArea, landmark?, city, state, pinCode, country },
+                               //   currentTenure: { fromMonth, fromYear, toMonth?, toYear?, isPresent },
+                               //   isPermanentSameAsCurrent: Boolean,
+                               //   permanentAddress?: { houseNo, streetArea, landmark?, city, state, pinCode, country },
+                               //   permanentTenure?: { fromMonth, fromYear, toMonth?, toYear?, isPresent },
+                               //   uploadedDocuments: [{ id, documentType, fileUrl, originalFilename, uploadedAt }]? 
+                               // }
+
+  // --- Step 4: Education Verification ---
+  educationVerification  Json? // Array of objects:
+                               // [{ id, qualification, otherQualificationName?, schoolNameAddress, 
+                               //    joiningMonth, joiningYear, passingMonth, passingYear, otherDetails?, 
+                               //    uploadedDocuments: [{id, documentType, fileUrl, originalFilename, uploadedAt}]? 
+                               // }]
+
+  // --- Step 5: Employment Verification ---
+  employmentVerification Json? // Array of objects:
+                               // [{ id, employerName, designation, companyAddress?, 
+                               //    joiningMonth, joiningYear, lastWorkingMonth?, lastWorkingYear?, 
+                               //    isPresentEmployee, reasonForLeaving?, 
+                               //    uploadedDocuments: [{id, documentType, fileUrl, originalFilename, uploadedAt}]? 
+                               // }]
+
+  // --- Step 6: Identity Verification ---
+  identityVerification   Json? // Array of objects:
+                               // [{ id, idType, otherIdTypeName?, idNumber, 
+                               //    uploadedDocuments: [{id, documentType, fileUrl, originalFilename, uploadedAt}]? 
+                               // }]
+
+  // --- Step 7: Authorization & Declaration ---
+  authorization          Json? // Object to store:
+                               // { employerNameForLOA: String, place: String, declarationDate: String (DD-MM-YY) }
+  signatureImageUrl      String? // URL/path to the final stored signature image
+
+  // --- Post Submission Data ---
+  responsePDFUrl         String?   // URL/path to the generated BGV PDF
+  submittedAt            DateTime? // Timestamp of final submission
+
+  // --- Timestamps ---
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+}

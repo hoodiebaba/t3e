@@ -1,36 +1,146 @@
-@import "tailwindcss";
+/* Import Tailwind if you're using its base styles or utilities elsewhere */
+@import "tailwindcss"; /* This should ideally be at the very top */
 
 :root {
+  /* Initial (Light Theme) Defaults */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #171717; /* Dark text for light background */
+
+  /* Other variables from your second :root block - good for specific elements */
+  --light-red-bg: #fff5f6;
+  --main-blue: #1170ee;
+  --main-yellow: #ffc801;
+  --label-black: #191c21; /* Dark label for light backgrounds */
+  --value-grey: #44484e;  /* Darker grey value for light backgrounds */
+  --white: #fff;
+  --card-shadow: 0 4px 18px rgba(60,72,101,0.09);
+
+  /* Variables for your component's dark theme (ensure these are what you want for dark mode) */
+  --bg-main-dark: #0a0a0a;
+  --bg-card-dark: #181818; /* Or #1a1a1a as previously discussed */
+  --text-color-dark-theme-default: #ededed; /* Default light text for dark theme */
+  --text-color-dark-theme-medium: #cccccc;
+  --text-color-dark-theme-placeholder: #777777;
+  --border-color-dark: #333333;
+  --border-color-input-dark: #444444;
+
+  /* Variables your avf-response.module.css expects for the dark theme */
+  /* These will map to the dark theme values by default or when dark mode is active */
+  --bg-card: var(--bg-main); /* Fallback, ideally overridden for dark mode */
+  --text-color-dark: var(--foreground); /* Fallback, will be overridden */
+  --text-color-medium: var(--foreground); /* Fallback */
+  --text-color-light: var(--foreground); /* Fallback */
+  --text-color-placeholder: #6c757d; /* Default placeholder */
+  --border-color: #dee2e6; /* Default light theme border */
+  --border-color-input: #ced4da; /* Default light theme input border */
+  --focus-ring-color: rgba(0, 123, 255, 0.25); /* Default */
+
+  --primary-blue: #007bff; /* Re-define if different from --main-blue */
+  --text-on-primary-blue: #ffffff;
+  --primary-yellow: var(--main-yellow);
+  --text-on-primary-yellow: #212529;
+  --primary-green: #28a745;
+  /* --text-on-primary-green: #ffffff; */ /* text-on-primary-blue can be reused */
+  --primary-red: #dc3545;
+
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+
+  --card-shadow-dark: 0 2px 5px rgba(0,0,0,0.4);
+  /* --card-shadow-strong: 0 4px 10px rgba(0,0,0,0.5); */ /* Not used in module */
 }
 
-@theme inline {
+/* This @theme block seems specific to a framework or preprocessor. 
+   If it's standard CSS, it might not work as intended.
+   CSS variables are typically sufficient. */
+/* @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+} 
+*/
 
+/* Dark Mode Specific Overrides */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--bg-main-dark);         /* e.g., #0a0a0a */
+    --foreground: var(--text-color-dark-theme-default); /* e.g., #ededed */
+
+    /* Override variables used by avf-response.module.css for dark mode */
+    --bg-card: var(--bg-card-dark);                     /* e.g., #181818 */
+    --text-color-dark: var(--text-color-dark-theme-default); /* e.g., #ededed */
+    --text-color-medium: var(--text-color-dark-theme-medium); /* e.g., #cccccc */
+    --text-color-light: #888888; /* Dimmer text for dark mode */
+    --text-color-placeholder: var(--text-color-dark-theme-placeholder); /* e.g., #777777 */
+    
+    --border-color: var(--border-color-dark);           /* e.g., #333333 */
+    --border-color-input: var(--border-color-input-dark); /* e.g., #444444 */
+    --focus-ring-color: rgba(0, 123, 255, 0.35); /* Lighter focus for dark */
+    --card-shadow: var(--card-shadow-dark);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background); /* Applies light or dark based on :root */
+  color: var(--foreground);         /* Applies light or dark based on :root */
+  font-family: 'Roboto', Arial, Helvetica, sans-serif; /* Changed to Roboto to match PDF */
+  margin: 0; /* Already in your pdfUtil.js body, good to have here too */
+  padding: 0; /* Already in your pdfUtil.js body */
+  -webkit-font-smoothing: antialiased; /* Optional: for smoother fonts */
+  -moz-osx-font-smoothing: grayscale;  /* Optional: for smoother fonts */
 }
 
-:root {
-  --light-red-bg: #fff5f6;
-  --main-blue: #1170ee;
-  --main-yellow: #ffc801;
-  --label-black: #191c21;
-  --value-grey: #44484e;
-  --white: #fff;
-  --card-shadow: 0 4px 18px rgba(60,72,101,0.09);
+body {
+  background-color: #ffffff !important;
+}
+
+.avf-response-module__FVN6Jq__infoCard {
+  background-color: white !important;
+  color: black !important;
+  margin-top: 15px;
+}
+
+.avf-response-module__FVN6Jq__label,
+.avf-response-module__FVN6Jq__value,
+.avf-response-module__FVN6Jq__valueAddress {
+  color: black !important;
+}
+
+/* Make the form card white */
+.avf-response-module__FVN6Jq__step2Card {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Make input labels black */
+.avf-response-module__FVN6Jq__inputLabel {
+  color: #000000 !important;
+  font-weight: 500;
+}
+
+/* Input text color */
+.avf-response-module__FVN6Jq__inputField,
+.avf-response-module__FVN6Jq__inputField::placeholder,
+.avf-response-module__FVN6Jq__mobileInput {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #ccc;
+}
+
+/* Country code span + camera button text */
+.avf-response-module__FVN6Jq__countryCode,
+.avf-response-module__FVN6Jq__cameraButton {
+  color: #000000 !important;
+}
+
+/* Optional: Camera buttons look cleaner on white */
+.avf-response-module__FVN6Jq__cameraButton {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
+
+.avf-response-module__FVN6Jq__step2Title {
+  color: #000000 !important;
 }

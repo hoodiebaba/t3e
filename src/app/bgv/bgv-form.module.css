@@ -1,0 +1,624 @@
+/* src/app/bgv/bgv-form.module.css */
+.bgvFormContainer {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.formHeader {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.formHeader h1 {
+  font-size: 2em;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.formSubtitle {
+  font-size: 1em;
+  color: #666;
+}
+
+.loadingMessage,
+.errorMessage {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1em;
+}
+
+.errorMessage {
+  color: #d9534f;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  border-radius: 4px;
+}
+
+.formStep {
+  padding: 20px;
+  margin-bottom: 20px;
+  /* border: 1px solid #f0f0f0; */
+  border-radius: 8px;
+  /* background-color: #fafafa; */
+}
+
+.stepTitle {
+  font-size: 1.6em;
+  color: #007bff;
+  margin-bottom: 25px;
+  font-weight: 500;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #007bff30;
+}
+
+.formField {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 0.95em;
+  color: #454545;
+}
+
+.input,
+.select,
+.textarea { /* Add textarea later if needed */
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.buttonGroup {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center; /* Isko 'center' kar dein */
+  gap: 12px;
+}
+
+.buttonPrimary,
+.buttonSecondary,
+.buttonDanger { /* Add danger later if needed */
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.buttonPrimary {
+  background-color: #007bff;
+  color: white;
+}
+.buttonPrimary:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+.buttonPrimary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+
+.buttonSecondary {
+  background-color: #6c757d;
+  color: white;
+}
+.buttonSecondary:hover:not(:disabled) {
+  background-color: #545b62;
+}
+.buttonSecondary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.buttonPrimary:disabled,
+.buttonSecondary:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center; /* Vertically align items */
+  width: 100%;
+  border: 1px solid #ccc; /* Border around the group */
+  border-radius: 6px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.inputGroup:focus-within { /* Style when an element inside is focused */
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.inputGroupText {
+  padding: 12px 15px;
+  background-color: #e9ecef; /* Light grey background for +91 */
+  color: #495057;
+  font-size: 1em;
+  border-right: 1px solid #ccc; /* Separator line */
+  /* Optional: to make its corners match if .input has rounded corners */
+  border-top-left-radius: 5px; /* Match .input's border-radius if it's 6px */
+  border-bottom-left-radius: 5px;
+}
+
+.inputGroup .input {
+  border: none; /* Remove individual border from input when inside group */
+  border-radius: 0; /* Remove individual radius */
+  border-top-right-radius: 5px; /* Adjust to match group's radius */
+  border-bottom-right-radius: 5px;
+  flex-grow: 1; /* Make input take remaining space */
+  /* Remove focus outline from input if group handles it */
+  box-shadow: none !important; 
+}
+
+.inputGroup .input:focus {
+  border-color: transparent !important; /* No border change on focus for input inside group */
+  box-shadow: none !important; /* No shadow on focus for input inside group */
+}
+
+/* src/app/bgv/bgv-form.module.css (add this style) */
+
+/* ... (existing styles) ... */
+
+.requiredAsterisk {
+  color: red;
+  margin-left: 3px; /* Thoda sa space label text aur asterisk ke beech */
+}
+
+/*step 2 css */
+
+/* src/app/bgv/bgv-form.module.css (add/modify these styles) */
+
+/* ... (existing styles) ... */
+
+.select { /* Style for select dropdowns */
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  box-sizing: border-box;
+  background-color: white; /* Ensure select has a background */
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.inputFile { /* Basic styling for file input */
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9em;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+}
+
+.imagePreviewContainer {
+  margin-top: 15px;
+  text-align: left; /* Or center, as you prefer */
+}
+
+.imagePreview {
+  max-width: 150px; /* Adjust size as needed */
+  max-height: 150px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  object-fit: cover; /* To maintain aspect ratio */
+}
+
+.capitalizeInput { /* For Full Name */
+  text-transform: capitalize;
+}
+
+
+/* step 3... */
+
+.formRow { /* For placing fields side-by-side */
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px; /* Space between fields in a row */
+  margin-bottom: 20px;
+}
+
+.formRow > .formField {
+  flex: 1; /* Each field takes equal space */
+  min-width: 200px; /* Minimum width before wrapping */
+  margin-bottom: 0;
+}
+
+.addressBlock {
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background-color: #fdfdfd;
+}
+
+.subHeading { /* For "Tenure of Stay" */
+  font-size: 1.1em;
+  color: #555;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.sectionSubTitle { /* For "Current Address", "Permanent Address", "Document Upload" titles */
+  font-size: 1.3em;
+  color: #333;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.marginTopLarge {
+    margin-top: 30px;
+}
+
+.formFieldInline {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.checkbox {
+  margin-right: 8px;
+  width: auto;
+  height: auto;
+  accent-color: #007bff;
+}
+
+.checkboxLabel {
+  font-weight: normal;
+  font-size: 0.95em;
+  color: #333;
+  margin-bottom: 0;
+}
+
+.infoText {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 15px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  border-left: 3px solid #007bff;
+}
+
+.documentUploadRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 15px;
+  align-items: flex-end;
+  padding: 15px;
+  border: 1px dashed #ddd;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.documentUploadRow .formField {
+  margin-bottom: 0;
+}
+
+.fileNamePreview {
+  font-size: 0.85em;
+  color: #555;
+  margin-top: 5px;
+  word-break: break-all;
+}
+
+.imagePreviewSmall {
+  max-width: 100px;
+  max-height: 70px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 3px;
+  margin-top: 8px;
+  object-fit: cover;
+}
+
+.addMoreButton {
+  background-color: #28a74520;
+  color: #155724;
+  border: 1px dashed #28a745;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  transition: background-color 0.2s ease;
+}
+.addMoreButton:hover:not(:disabled) {
+  background-color: #28a74535;
+}
+
+.removeDocButton {
+  background-color: #dc354520;
+  color: #721c24;
+  border: 1px dashed #dc3545;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  align-self: center;
+  margin-bottom: 5px;
+  height: fit-content;
+  transition: background-color 0.2s ease;
+}
+.removeDocButton:hover:not(:disabled) {
+  background-color: #dc354535;
+}
+
+@media (max-width: 768px) {
+  .documentUploadRow {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+  }
+  .removeDocButton {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+/* step 4... */
+/* src/app/bgv/bgv-form.module.css (add/modify these styles) */
+
+/* ... (existing styles) ... */
+
+.textarea { /* Style for textarea */
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  box-sizing: border-box;
+  font-family: inherit; /* Inherit font from parent */
+  min-height: 80px; /* Minimum height for textarea */
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.entryBlock {
+  padding: 20px;
+  border: 1px solid #dce3f0; /* Lighter border */
+  border-radius: 8px;
+  margin-bottom: 25px;
+  background-color: #f9fafc; /* Slightly different background for each entry */
+}
+
+.entryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+.entryTitle {
+  font-size: 1.2em;
+  color: #2c3e50; /* Darker blue/grey */
+  font-weight: 600;
+}
+
+.removeEntryButton {
+  background-color: #e74c3c20; /* Lighter red */
+  color: #c0392b; /* Darker red */
+  border: 1px dashed #e74c3c;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: background-color 0.2s ease;
+}
+.removeEntryButton:hover:not(:disabled) {
+  background-color: #e74c3c35;
+}
+
+.subHeadingDocs { /* For "Upload Documents for this Record" */
+  font-size: 1.05em;
+  color: #34495e; /* Another shade of blue/grey */
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.addMoreDocsButtonMini, .removeDocButtonMini {
+  padding: 6px 10px;
+  font-size: 0.8em;
+  border-radius: 4px;
+  margin-top: 5px; /* Space if stacked */
+}
+
+.addMoreDocsButtonMini {
+  background-color: #2ecc7120;
+  color: #27ae60;
+  border: 1px dashed #2ecc71;
+}
+.addMoreDocsButtonMini:hover:not(:disabled) {
+  background-color: #2ecc7135;
+}
+
+.removeDocButtonMini {
+  background-color: #e74c3c20; /* Lighter red */
+  color: #c0392b; /* Darker red */
+  border: 1px dashed #e74c3c;
+  align-self: center; /* For documentUploadRow if it's flex/grid and items have different heights */
+}
+.removeDocButtonMini:hover:not(:disabled) {
+  background-color: #e74c3c35;
+}
+
+
+.addMoreEntryButton {
+  background-color: #3498db20; /* Lighter blue */
+  color: #2980b9; /* Darker blue */
+  border: 1px dashed #3498db;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  display: block; /* Full width button */
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 30px; /* Space before main button group */
+  transition: background-color 0.2s ease;
+}
+.addMoreEntryButton:hover:not(:disabled) {
+  background-color: #3498db35;
+}
+
+/* Adjust .documentUploadRow for the remove button */
+.documentUploadRow {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr auto;  Original */
+  grid-template-columns: minmax(150px, 1fr) minmax(150px, 1fr) auto; /* Ensure columns have min width */
+  gap: 15px;
+  align-items: flex-end;
+  padding: 15px;
+  border: 1px dashed #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px; /* Space between multiple docs in one entry */
+  background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .documentUploadRow {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+  }
+  .removeDocButtonMini { /* Also apply to the general removeDocButton if needed */
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+/* src/app/bgv/bgv-form.module.css (add/modify these styles) */
+
+/* ... (existing styles) ... */
+
+.loaContainer {
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.loaHeading {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.loaSubHeading {
+  text-align: center;
+  font-size: 1em;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.loaContainer p {
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.signaturePadContainer {
+  border: 1px dashed #007bff; /* Dashed border for signature area */
+  border-radius: 6px;
+  margin-bottom: 10px;
+  height: 150px; /* Adjust height as needed */
+  cursor: crosshair;
+  background-color: #fff;
+}
+
+.signatureCanvas { /* This class is passed to canvasProps in SignatureCanvas */
+  width: 100%;
+  height: 100%;
+  border-radius: 6px; /* Match container if needed */
+}
+
+.buttonClearSignature {
+  background-color: #ffc10740; /* Light warning yellow */
+  color: #856404;
+  border: 1px dashed #ffc107;
+  padding: 8px 15px;
+  font-size: 0.9em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.buttonClearSignature:hover:not(:disabled) {
+  background-color: #ffc10760;
+}
+
+.declarationSection {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.autoFilledText {
+  font-size: 1em;
+  color: #333;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  min-height: 40px; /* Match input field height roughly */
+  display: flex;
+  align-items: center;
+}
+
+.signaturePreviewImage {
+  max-width: 250px;
+  max-height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff; /* If signature is transparent PNG */
+  margin-top: 5px;
+}

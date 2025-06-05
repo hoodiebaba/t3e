@@ -107,9 +107,9 @@
   margin-right: 7px;
   vertical-align: middle;
 }
-.notClicked   { background: #dbdbe9; }
-.clicked      { background: #edbb3d; }
-.submitted    { background: #27c671; }
+.notClicked   { background: #ff0000; }
+.clicked      { background: #15ff00; }
+.submitted    { background: #4400ff; }
 .expired      { background: #f36a6a; }
 
 /* ---------- MODALS (overlay + card) ---------- */
