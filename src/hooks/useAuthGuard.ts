@@ -1,6 +1,6 @@
 // src/hooks/useAuthGuard.ts
-import { useUser } from "@/context/UserContext";
-import { useRouter, usePathname } from "next/navigation";
+import { useUser } from "../context/UserContext";
+import { useRouter, usePathname } from "next/navigation.js";
 import { useEffect } from "react";
 
 export function useAuthGuard() {

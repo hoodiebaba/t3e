@@ -1,6 +1,6 @@
 // File: src/app/api/auth/verify-otp/route.ts
 import { NextResponse } from 'next/server';
-import { prisma } from '../../../../lib/prisma';
+import { prisma } from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
 
 export async function POST(request: Request) {

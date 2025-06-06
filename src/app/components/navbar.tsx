@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation.js';
 import styles from './navbar.module.css';
 import { Bell, Settings } from 'lucide-react';
-import { useUser } from '@/context/UserContext';
+import { useUser } from '@/context/UserContext.tsx';
 
 export default function Navbar() {
   const router = useRouter();

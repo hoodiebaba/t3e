@@ -1,9 +1,9 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation.js';
 import { useEffect } from 'react';
-import Navbar from './navbar';
-import Sidebar from './sidebar';
-import { useUser } from '@/context/UserContext';
+import Navbar from './navbar.tsx';
+import Sidebar from './sidebar.jsx';
+import { useUser } from '@/context/UserContext.tsx';
 
 export default function ProtectedLayout({ children }) {
   const router = useRouter();

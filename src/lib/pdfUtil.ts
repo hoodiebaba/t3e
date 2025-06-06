@@ -394,7 +394,7 @@ export async function generatePDFAndSave(data, filename) {
   `;
 
   const browser = await puppeteer.launch({
-    headless: "new",
+    headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--font-render-hinting=none'],
   });
   const page = await browser.newPage();
@@ -415,13 +415,13 @@ export async function generatePDFAndSave(data, filename) {
   });
   await browser.close();
 
-  const saveDir = path.resolve(process.cwd(), "public", "pdfs");
+  const saveDir = path.resolve(process.cwd(), "public", "avf");
   if (!fs.existsSync(saveDir)) {
     fs.mkdirSync(saveDir, { recursive: true });
   }
   const filePath = path.join(saveDir, filename);
   fs.writeFileSync(filePath, pdfBuffer);
-  return `/pdfs/${filename}`;
+  return `/avf/${filename}`;
 }
 
 

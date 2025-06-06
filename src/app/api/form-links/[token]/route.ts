@@ -1,9 +1,11 @@
+// src/app/api/form-links/[token]/route.ts
+
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { generatePDFAndSave } from '@/lib/pdfUtil'; // Ensure this path is correct
 import type { NextRequest } from 'next/server';
 
-// Haversine distance function
+// Haversine distance function (Ismein koi badlav nahi)
 function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const toRad = (x: number): number => (x * Math.PI) / 180;
   const R = 6371000; // Earth radius in meters
@@ -12,29 +14,25 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number): nu
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
 
-// GET Handler
+// ================== GET Handler ==================
 export async function GET(
-  req: NextRequest, 
+  req: NextRequest,
   context: { params: { token: string } }
- // Direct destructuring of params from the context-like object
 ) {
-  // console.log("API GET HANDLER: Request received for /api/form-links/[token]");
- const params = await context.params;
-const token = params.token;
- // Now token is directly from the destructured params
+  // ✅ FIX: `context.params` ek direct object hai, Promise nahi.
+  // Isliye yahan 'await' ki zaroorat nahi hai.
+  const { token } = context.params;
 
   if (!token) {
-    // console.log("API GET HANDLER: Token is missing in params");
     return NextResponse.json({ ok: false, error: "Token parameter is missing" }, { status: 400 });
   }
-  // console.log("API GET HANDLER: Attempting to fetch form with token:", token);
 
   try {
     const form = await prisma.formLinks.findUnique({
@@ -50,16 +48,14 @@ const token = params.token;
         country: true,
         status: true,
         responsePDF: true,
-        formType: true,     // ✨ Selected for client if needed, and for POST logic consistency
-        createdBy: true,    // ✨ Selected for client if needed
+        formType: true,
+        createdBy: true,
       }
     });
 
     if (!form) {
-      // console.log("API GET HANDLER: Form not found for token:", token);
       return NextResponse.json({ ok: false, error: "Form link not found or invalid" }, { status: 404 });
     }
-    // console.log("API GET HANDLER: Form found, returning data for token:", token);
     return NextResponse.json({ ok: true, form });
   } catch (error) {
     console.error("API GET HANDLER: Error fetching form data from DB:", error);
@@ -68,17 +64,20 @@ const token = params.token;
   }
 }
 
-// POST Handler
-export async function POST(req: NextRequest, context: any) {
-  const params = await context.params;
-const tokenValue = params.token;
-  console.log("API POST HANDLER: Request received for /api/form-links/[token]");
+// ================== POST Handler ==================
+export async function POST(
+  req: NextRequest,
+  // ✅ FIX: 'context' ko 'any' type dene ke bajaye, sahi type di gayi hai.
+  // Isse code zyada safe aur clean rehta hai.
+  context: { params: { token: string } }
+) {
+  // ✅ FIX: Yahan bhi 'await' hata diya gaya hai aur 'token' seedhe nikal liya hai.
   const { token } = context.params;
+  console.log("API POST HANDLER: Request received for /api/form-links/[token]");
 
   const submissionPayload = await req.json();
-  // console.log("API POST HANDLER: Received submission payload for token:", token);
 
-  // Fetch existing record, ensuring all fields needed for pdfData (incl. for filename) are selected
+  // Database se existing record fetch karna
   const existing = await prisma.formLinks.findUnique({
     where: { token },
     select: {
@@ -91,9 +90,8 @@ const tokenValue = params.token;
       state: true,
       country: true,
       status: true,
-      formType: true,     // ✨ For filename & PDF
-      createdBy: true,    // ✨ For "Requested By" in PDF
-      // Select any other fields from 'existing' that pdfData might need
+      formType: true,
+      createdBy: true,
     }
   });
 
@@ -115,16 +113,13 @@ const tokenValue = params.token;
     existing.zipCode,
     existing.country
   ].filter(Boolean).join(", ");
-  // console.log("API POST HANDLER: CANDIDATE ADDRESS FOR GEOCODE:", candidateAddressString);
 
-  // ✨✨✨ CORRECTED API Key Access HERE ✨✨✨
-  const ACTUAL_Maps_API_KEY = process.env.Maps_API_KEY; 
-  
+  const ACTUAL_Maps_API_KEY = process.env.Maps_API_KEY;
+
   if (!ACTUAL_Maps_API_KEY) {
-    console.error("API POST HANDLER ERROR: Maps_API_KEY is not set in environment variables.");
+    console.error("API POST HANDLER ERROR: Maps_API_KEY environment variable set nahi hai.");
     return NextResponse.json({ ok: false, error: "Server configuration error (missing API key)" }, { status: 500 });
   }
-  // console.log("API POST HANDLER: Using Maps_API_KEY.");
 
   let addressCoords;
   try {
@@ -142,20 +137,19 @@ const tokenValue = params.token;
     const errorMessage = geoError instanceof Error ? geoError.message : "Unknown geocoding network error.";
     return NextResponse.json({ ok: false, error: `Geocoding service connection error: ${errorMessage}` }, { status: 500 });
   }
-  // console.log("API POST HANDLER: Geocoded candidate address:", addressCoords);
 
   if (!submissionPayload.gpsLocation || typeof submissionPayload.gpsLocation.lat !== 'number' || typeof submissionPayload.gpsLocation.lng !== 'number') {
     return NextResponse.json({ ok: false, error: "Valid GPS location from respondent is missing." }, { status: 400 });
   }
+
   const dist = getDistance(
     addressCoords.lat,
     addressCoords.lng,
     submissionPayload.gpsLocation.lat,
     submissionPayload.gpsLocation.lng
   );
-  // console.log(`API POST HANDLER: Distance calculated: ${dist}m`);
 
-  const MAX_ALLOWED_DISTANCE_METERS = process.env.MAX_DISTANCE_METERS ? parseInt(process.env.MAX_DISTANCE_METERS) : 10000; // Increased default
+  const MAX_ALLOWED_DISTANCE_METERS = process.env.MAX_DISTANCE_METERS ? parseInt(process.env.MAX_DISTANCE_METERS) : 10000;
   if (dist > MAX_ALLOWED_DISTANCE_METERS) {
     return NextResponse.json({
       ok: false,
@@ -178,46 +172,37 @@ const tokenValue = params.token;
     state: existing.state,
     zipCode: existing.zipCode,
     country: existing.country,
-    requestedBy: existing.createdBy, // ✨ For "Requested By" field in PDF
-    formType: existing.formType,     // ✨ For PDF filename & display in PDF
-
+    requestedBy: existing.createdBy,
+    formType: existing.formType,
     verifierName: submissionPayload.fullName,
     mobileNumber: submissionPayload.mobileNumber,
     relationship: submissionPayload.relationship,
     residenceType: submissionPayload.residenceType,
     residingSince: submissionPayload.residingSince,
-    landmark: submissionPayload.landmark, 
+    landmark: submissionPayload.landmark,
     govtIdType: submissionPayload.govtIdType,
-
     govtIdPhotos: submissionPayload.govtIdPhotos || [],
     selfiePhoto: submissionPayload.selfiePhoto || null,
     outsideHousePhoto: submissionPayload.outsideHousePhoto || null,
-
     submittedAt: new Date().toISOString(),
-    verificationType: existing.formType || "Digital Address Verification", 
-    
+    verificationType: existing.formType || "Digital Address Verification",
     staticMapUrl: staticMapUrl,
     addressCoords: addressCoords,
     gpsLocation: submissionPayload.gpsLocation,
   };
-  
-  // ✨ New Filename Logic ✨
-  const safeCandidateName = (pdfData.candidateName || "UnknownCandidate")
-                            .replace(/[^a-zA-Z0-9\s]/gi, '') // Remove special chars except space
-                            .replace(/\s+/g, '_');          // Replace spaces with underscore
-  const safeFormType = (pdfData.formType || "Report")
-                         .replace(/[^a-zA-Z0-9]/gi, '_'); // Remove special chars
 
-  // Ensure names are not empty after sanitization
+  const safeCandidateName = (pdfData.candidateName || "UnknownCandidate")
+    .replace(/[^a-zA-Z0-9\s]/gi, '')
+    .replace(/\s+/g, '_');
+  const safeFormType = (pdfData.formType || "Report")
+    .replace(/[^a-zA-Z0-9]/gi, '_');
+
   const finalCandidateNamePart = safeCandidateName.toLowerCase() || "candidate";
   const finalFormTypePart = safeFormType.toLowerCase() || "report";
   const filename = `${finalCandidateNamePart}_${finalFormTypePart}.pdf`;
-  
+
   try {
-    // console.log("API POST HANDLER: Attempting to generate PDF:", filename);
-    // console.log("Data for PDF (keys only):", Object.keys(pdfData));
     const pdfPath = await generatePDFAndSave(pdfData, filename);
-    // console.log("API POST HANDLER: PDF generated at:", pdfPath);
 
     await prisma.formLinks.update({
       where: { token },
@@ -226,7 +211,6 @@ const tokenValue = params.token;
         responsePDF: pdfPath,
       }
     });
-    // console.log("API POST HANDLER: FormLink record updated in DB for token:", token);
     return NextResponse.json({ ok: true, message: "Submission successful.", pdfPath });
   } catch (processError) {
     console.error("API POST HANDLER: Error during PDF generation or DB update:", processError);

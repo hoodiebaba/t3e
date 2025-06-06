@@ -5,7 +5,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import styles from './login.module.css';
 
 // Import UserContext
-import { useUser } from '@/context/UserContext';
+import { useUser } from '@/context/UserContext.tsx';
 
 type Role = 'SUDO' | 'ADMIN';
 

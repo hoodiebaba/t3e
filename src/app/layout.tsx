@@ -2,11 +2,11 @@
 'use client';
 
 import './globals.css';
-import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation.js';
 import { PropsWithChildren } from 'react';
-import Navbar from './components/navbar';
-import Sidebar from './components/sidebar';
-import { UserProvider, useUser } from '@/context/UserContext';
+import Navbar from './components/navbar.tsx';
+import Sidebar from './components/sidebar.jsx';
+import { UserProvider, useUser } from '@/context/UserContext.tsx';
 import './globals.css';
 
 function LayoutBody({ children }: PropsWithChildren) {

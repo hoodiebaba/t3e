@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useSearchParams, useRouter, notFound } from 'next/navigation';
+import { useSearchParams, useRouter, notFound } from 'next/navigation.js';
 import styles from './avf-response.module.css';
 
 // Add this just after your imports, before AVFResponsePage function

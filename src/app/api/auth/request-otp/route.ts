@@ -1,6 +1,6 @@
 // File: src/app/api/auth/request-otp/route.ts
-import { NextResponse } from 'next/server';
-import { prisma } from '../../../../lib/prisma';
+import { NextResponse } from 'next/server.js';
+import { prisma } from '@/lib/prisma'; // For NodeNext, if extension required
 import nodemailer from 'nodemailer';
 import { generateOTP } from '../../../../utils/otp';
 import bcrypt from 'bcryptjs'; // 🔥 Add this on top

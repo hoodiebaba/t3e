@@ -1,13 +1,13 @@
 'use client';
 
 import { useAuthGuard } from '@/hooks/useAuthGuard';
-import { useUser } from '@/context/UserContext';
+import { useUser } from '@/context/UserContext.tsx';
 import React, { useState, useEffect } from 'react';
 import styles from './forms.module.css';
 import { MdClose, MdContentCopy, MdAdd, MdDelete, MdFilterList, MdSort, MdPerson, MdInsertLink, MdCheckCircle, MdRemoveCircle } from 'react-icons/md';
 import { FaUserEdit, FaEye, FaTrash, FaPlus, FaFilter } from 'react-icons/fa';
 
-import NoAccess from '../components/NoAccess';
+import NoAccess from '../components/NoAccess.tsx';
 import { FormLinks } from '@prisma/client';
 
 export default function FormsPage() {

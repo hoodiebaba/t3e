@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation.js';
 import styles from './NoAccess.module.css'; // optional, style ka path change kar lo
 
 export default function NoAccess({ message }: { message?: string }) {
