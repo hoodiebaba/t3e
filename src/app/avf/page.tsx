@@ -153,61 +153,62 @@ export default function AVFResponsePage() {
   }
 
   // --- NEW startCamera function ---
-  const startCamera = async (type) => {
-    setCameraError(''); // Clear previous camera errors
-    setShowCamera(true); 
-    setCapturingFor(type);
+  const startCamera = async (type, facing = 'environment') => {
+  setCameraError('');
+  setShowCamera(true); 
+  setCapturingFor(type);
 
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-          video: { 
-            facingMode: 'environment', 
-            width: { ideal: 1280 },    
-            height: { ideal: 720 } 
-          } 
-        });
-        setCameraStream(stream); 
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: { exact: facing }, // 'user' ya 'environment'
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      });
+      setCameraStream(stream); 
 
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.onloadedmetadata = () => {
-            videoRef.current.play().catch(err => { 
-              setCameraError(`Failed to play video stream: ${err.message}. Please ensure camera is not in use by another app.`);
-              stopCamera(); 
-            });
-          };
-          videoRef.current.onplaying = () => {
-            setCameraError(''); 
-          };
-          videoRef.current.onerror = (e) => {
-            setCameraError("An error occurred with the video display. Please try reopening the camera.");
-            stopCamera();
-          };
-        } else {
-          setCameraError("Video element not available. Please refresh.");
-          setShowCamera(false);
-        }
-      } catch (err) {
-        let userMessage = "Could not access camera. Please ensure permissions are granted and no other app is using the camera.";
-        if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
-          userMessage = "No camera found. Please ensure a camera is connected/enabled.";
-        } else if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
-          userMessage = "Camera permission denied. Please enable it in your browser/OS settings and refresh.";
-        } else if (err.name === "NotReadableError" || err.name === "TrackStartError") {
-          userMessage = "Camera is currently in use or cannot be started (hardware error). Try closing other apps or restarting your device.";
-        } else if (err.name === "OverconstrainedError") {
-          userMessage = `The camera does not support requested settings (e.g., facingMode 'environment' or resolution). Error: ${err.constraint}`;
-        }
-        setCameraError(userMessage);
-        setShowCamera(false); 
-        setCameraStream(null); 
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current.play().catch(err => { 
+            setCameraError(`Failed to play video stream: ${err.message}. Please ensure camera is not in use by another app.`);
+            stopCamera(); 
+          });
+        };
+        videoRef.current.onplaying = () => {
+          setCameraError(''); 
+        };
+        videoRef.current.onerror = (e) => {
+          setCameraError("An error occurred with the video display. Please try reopening the camera.");
+          stopCamera();
+        };
+      } else {
+        setCameraError("Video element not available. Please refresh.");
+        setShowCamera(false);
       }
-    } else {
-      setCameraError("Camera API (getUserMedia) is not supported by this browser.");
-      setShowCamera(false);
+    } catch (err) {
+      let userMessage = "Could not access camera. Please ensure permissions are granted and no other app is using the camera.";
+      if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
+        userMessage = "No camera found. Please ensure a camera is connected/enabled.";
+      } else if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+        userMessage = "Camera permission denied. Please enable it in your browser/OS settings and refresh.";
+      } else if (err.name === "NotReadableError" || err.name === "TrackStartError") {
+        userMessage = "Camera is currently in use or cannot be started (hardware error). Try closing other apps or restarting your device.";
+      } else if (err.name === "OverconstrainedError") {
+        userMessage = `The camera does not support requested settings (e.g., facingMode '${facing}' or resolution). Error: ${err.constraint}`;
+      }
+      setCameraError(userMessage);
+      setShowCamera(false); 
+      setCameraStream(null); 
     }
-  };
+  } else {
+    setCameraError("Camera API (getUserMedia) is not supported by this browser.");
+    setShowCamera(false);
+  }
+};
+
 
   const stopCamera = () => {
     if (cameraStream) {
@@ -540,33 +541,91 @@ export default function AVFResponsePage() {
                 ))}
               </div>
               {govtIdPhotos.length < 2 && (
-                <button type="button" onClick={() => startCamera('govtId')} className={styles.cameraButton}>
-                  <span role="img" aria-label="camera icon">📷</span> Capture Govt. ID Photo
-                </button>
-              )}
+  <div style={{display:'flex', gap:8, marginBottom:12}}>
+    <button type="button" onClick={() => startCamera('govtId', 'environment')} className={styles.cameraButton}>
+      📷 Govt. ID (Back Camera)
+    </button>
+    <button type="button" onClick={() => startCamera('govtId', 'user')} className={styles.cameraButton}>
+      🤳 Govt. ID (Front Camera)
+    </button>
+  </div>
+)}
 
               <label className={styles.inputLabel}>Selfie at the Entrance of House (1 image)</label>
-              <div className={styles.sampleImageContainer}><p>Sample:</p><img src="/assets/sample1.jpg" alt="Sample Selfie at Entrance" className={styles.sampleImage} /></div>
-              {selfiePhoto && (
-                <div className={styles.photoPreviewItem}> <img src={selfiePhoto} alt="Selfie" className={styles.photoPreviewImg} /> <button type="button" onClick={() => removePhoto('selfie')} className={styles.removePhotoButton}>Retake</button> </div>
-              )}
-              {!selfiePhoto && (<button type="button" onClick={() => startCamera('selfie')} className={styles.cameraButton}><span role="img" aria-label="camera icon">📷</span> Capture Selfie</button>)}
+<div className={styles.sampleImageContainer}>
+  <p>Sample:</p>
+  <img src="/assets/sample1.jpg" alt="Sample Selfie at Entrance" className={styles.sampleImage} />
+</div>
+{selfiePhoto && (
+  <div className={styles.photoPreviewItem}>
+    <img src={selfiePhoto} alt="Selfie" className={styles.photoPreviewImg} />
+    <button type="button" onClick={() => removePhoto('selfie')} className={styles.removePhotoButton}>Retake</button>
+  </div>
+)}
+{!selfiePhoto && (
+  <div style={{display:'flex', gap:8, marginBottom:12}}>
+    <button
+      type="button"
+      onClick={() => startCamera('selfie', 'user')}
+      className={styles.cameraButton}
+    >
+      🤳 Capture Selfie (Front Camera)
+    </button>
+    <button
+      type="button"
+      onClick={() => startCamera('selfie', 'environment')}
+      className={styles.cameraButton}
+    >
+      📷 Capture Selfie (Back Camera)
+    </button>
+  </div>
+)}
 
-              <label className={styles.inputLabel}>Outside House Photo (1 image)</label>
-              <div className={styles.sampleImageContainer}><p>Sample:</p><img src="/assets/sample2.jpg" alt="Sample Outside House" className={styles.sampleImage} /></div>
-              {outsideHousePhoto && (
-                <div className={styles.photoPreviewItem}><img src={outsideHousePhoto} alt="Outside House" className={styles.photoPreviewImg} /><button type="button" onClick={() => removePhoto('outsideHouse')} className={styles.removePhotoButton}>Retake</button></div>
-              )}
-              {!outsideHousePhoto && (<button type="button" onClick={() => startCamera('outsideHouse')} className={styles.cameraButton}><span role="img" aria-label="camera icon">📷</span> Capture Outside House Photo</button>)}
-              
-              <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+<label className={styles.inputLabel}>Outside House Photo (1 image)</label>
+<div className={styles.sampleImageContainer}>
+  <p>Sample:</p>
+  <img src="/assets/sample2.jpg" alt="Sample Outside House" className={styles.sampleImage} />
+</div>
+{outsideHousePhoto && (
+  <div className={styles.photoPreviewItem}>
+    <img src={outsideHousePhoto} alt="Outside House" className={styles.photoPreviewImg} />
+    <button type="button" onClick={() => removePhoto('outsideHouse')} className={styles.removePhotoButton}>Retake</button>
+  </div>
+)}
+{!outsideHousePhoto && (
+  <div style={{display:'flex', gap:8, marginBottom:12}}>
+    <button
+      type="button"
+      onClick={() => startCamera('outsideHouse', 'environment')}
+      className={styles.cameraButton}
+    >
+      📷 Outside House (Back Camera)
+    </button>
+    <button
+      type="button"
+      onClick={() => startCamera('outsideHouse', 'user')}
+      className={styles.cameraButton}
+    >
+      🤳 Outside House (Front Camera)
+    </button>
+  </div>
+)}
 
-              {error && <div className={styles.inputError} style={{marginTop: '15px'}}>{error}</div>}
-              {!location && !error && step1Error && <div className={styles.locationWarning} style={{marginTop: '15px'}}>{step1Error}</div>}
+<canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
 
-              <button type="submit" disabled={submitted || showCamera || !location} className={styles.submitBtn}>
-                Submit
-              </button>
+{error && <div className={styles.inputError} style={{marginTop: '15px'}}>{error}</div>}
+{!location && !error && step1Error && (
+  <div className={styles.locationWarning} style={{marginTop: '15px'}}>{step1Error}</div>
+)}
+
+<button
+  type="submit"
+  disabled={submitted || showCamera || !location}
+  className={styles.submitBtn}
+>
+  Submit
+</button>
+
             </form>
           </div>
         </div>
