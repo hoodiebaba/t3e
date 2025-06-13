@@ -274,7 +274,7 @@ export async function GET(
         console.log(`GET: Updating FormLink status to "clicked" for token ${routeToken}`);
         await prisma.formLinks.update({
           where: { token: routeToken },
-          data: { status: 'clicked' },
+          data: { status: 'Clicked' },
         });
       }
       return NextResponse.json(
@@ -289,7 +289,7 @@ export async function GET(
       );
       await prisma.formLinks.update({
         where: { token: routeToken },
-        data: { status: 'clicked' },
+        data: { status: 'Clicked' },
       });
     }
     console.log(`GET: Returning BGV data for token ${routeToken}`);
@@ -541,9 +541,9 @@ export async function PUT(
     console.log('PUT: Updating FormLinks status...');
     await prisma.formLinks.update({
       where: { token: routeToken },
-      data: { status: 'draft_saved' },
+      data: { status: 'Draft' },
     });
-    console.log('PUT: FormLinks status updated to draft_saved.');
+    console.log('PUT: FormLinks status updated to Draft.');
     console.log('--- PUT Request Processed Successfully for token:', routeToken, '---');
 
     return NextResponse.json({ message: 'Draft saved successfully', data: savedDraft }, { status: 200 });

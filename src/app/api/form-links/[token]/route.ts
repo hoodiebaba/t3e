@@ -28,8 +28,7 @@ export async function GET(
 ) {
   // ✅ FIX: `context.params` ek direct object hai, Promise nahi.
   // Isliye yahan 'await' ki zaroorat nahi hai.
-  const { token } = context.params;
-
+const { token } = await context.params;
   if (!token) {
     return NextResponse.json({ ok: false, error: "Token parameter is missing" }, { status: 400 });
   }
@@ -72,7 +71,7 @@ export async function POST(
   context: { params: { token: string } }
 ) {
   // ✅ FIX: Yahan bhi 'await' hata diya gaya hai aur 'token' seedhe nikal liya hai.
-  const { token } = context.params;
+const { token } = await context.params;
   console.log("API POST HANDLER: Request received for /api/form-links/[token]");
 
   const submissionPayload = await req.json();
@@ -153,7 +152,7 @@ export async function POST(
   if (dist > MAX_ALLOWED_DISTANCE_METERS) {
     return NextResponse.json({
       ok: false,
-      error: `Your live location is too far from the registered address (${Math.round(dist)}m away). Max allowed: ${MAX_ALLOWED_DISTANCE_METERS}m.`
+      error: `Your live location is too far from the registered address (${Math.round(dist)}m away).`
     }, { status: 400 });
   }
 

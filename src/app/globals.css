@@ -126,7 +126,7 @@ body {
 .avf-response-module__FVN6Jq__mobileInput {
   color: #000000 !important;
   background-color: #ffffff !important;
-  border: 1px solid #ccc;
+  border: none;
 }
 
 /* Country code span + camera button text */
@@ -144,3 +144,7 @@ body {
 .avf-response-module__FVN6Jq__step2Title {
   color: #000000 !important;
 }
+
+
+
+

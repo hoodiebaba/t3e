@@ -449,9 +449,9 @@ export default function FormsPage() {
                 <td>
                   <span
                     className={styles.statusDot + ' ' +
-                      (form.status === 'Not clicked' ? styles.notClicked :
-                        form.status === 'clicked' ? styles.clicked :
-                          form.status === 'submitted' ? styles.submitted : styles.expired)}
+                      (form.status === 'Not Clicked' ? styles.notClicked :
+                        form.status === 'Clicked' ? styles.clicked :
+                          form.status === 'Submitted' ? styles.submitted : styles.expired)}
                   />{" "}
                   {form.status}
                 </td>
