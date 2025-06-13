@@ -135,11 +135,27 @@ export default function FormsPage() {
   }
 
   // 6. COPY LOGIC
-  function handleCopy(text: string, idx: number | null) { // Added type for text
-    navigator.clipboard.writeText(text);
-    setCopiedIdx(idx);
-    setTimeout(() => setCopiedIdx(null), 1400);
+function handleCopy(text: string, idx: number | null) {
+  // TypeScript ko satisfy karne ke liye navigator ko type cast kar rahe hain
+  const nav: any = typeof navigator !== "undefined" ? navigator : undefined;
+  if (
+    nav &&
+    nav.clipboard &&
+    typeof nav.clipboard.writeText === "function"
+  ) {
+    nav.clipboard.writeText(text)
+      .then(() => {
+        setCopiedIdx(idx);
+        setTimeout(() => setCopiedIdx(null), 1400);
+      })
+      .catch((err: any) => {
+        alert("Copy failed: " + err);
+      });
+  } else {
+    alert("Clipboard copy not supported in this browser/environment.");
   }
+}
+
 
   // 7. Unique Filter Options
   const userList = Array.from(new Set(formLinks.map(l => l.createdBy))).filter(Boolean);
